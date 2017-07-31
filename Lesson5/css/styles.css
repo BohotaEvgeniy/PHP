@@ -1,0 +1,30 @@
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    font-family: roboto;
+}
+.row {
+    padding: 20px 0;
+}
+li {
+    list-style: none;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+ul {
+    padding: 20px;
+}
+.trueHorisontal {
+    list-style: none;
+    display: inline-block;
+    vertical-align: top;
+}
+.false,.true {
+    background-color: mintcream;
+    display: inline-block;
+    border-radius: 2%;
+}
