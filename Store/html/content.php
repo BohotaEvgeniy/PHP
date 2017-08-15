@@ -7,6 +7,9 @@ if(isset($_GET['r'])) {
         case 'product':
             require_once 'product.php';
             break;
+        case 'basketPage':
+            require_once 'basketPage.php';
+            break;
         case 'pages':
             require_once 'pages.php';
             break;

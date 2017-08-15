@@ -1,5 +1,7 @@
 <?php
-header('Content-Type: text/html; charset=utf-8');
+header('content-type:text/html;charset=utf-8');
+?>
+<?php
 ini_set('display_errors',true);
 error_reporting(E_ALL);
 
@@ -73,3 +75,45 @@ function getProduct($products,$id) {
         return $products[$id];
     }
 }
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+if(isset($_GET['buy'])) {
+    if (isset($_GET['product_id']) && $_GET['amount']) {
+        $product_id = strip_tags(trim($_GET['product_id']));
+        $amount = strip_tags(trim($_GET['amount']));
+        $cart = array();
+        if (isset($_COOKIE['cart'])) {
+            $cart = unserialize($_COOKIE['cart']);
+            $cart[$product_id] = $amount;
+            setcookie('cart', serialize($cart), time() + 3600, '/');
+            header("location: http://php-master/store/index.php?r=product&id=" . $product_id);
+        } else {
+            $cart[$product_id] = $amount;
+            setcookie('cart', serialize($cart), time() + 3600, '/');
+            header("location: http://php-master/store/index.php?r=product&id=" . $product_id);
+        }
+    }
+}
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+function getCart($products){
+    $count = 0;
+    $cost = 0;
+    $obj = new stdClass();
+    if (isset($_COOKIE['cart'])) {
+        $cart_products = unserialize($_COOKIE['cart']);
+        foreach ($cart_products as $id => $amount) {
+            $products_cart[$id] = getProduct($products,$id);
+            $products_cart[$id]->amount = $amount;
+            $products_cart[$id]->cost = $products_cart[$id]->variant->price * $amount;
+            $products_cart[$id]->costOneProduct = $products_cart[$id]->variant->price;
+            $cost +=  $products_cart[$id]->variant->price * $amount;
+            $count += $amount;
+        }
+        $obj->items = $products_cart;
+    }
+    $obj->cost = $cost;
+    $obj->count = $count;
+    return $obj;
+}
+
+
+

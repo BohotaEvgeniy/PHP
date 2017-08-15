@@ -38,7 +38,11 @@
                 <? endif;?>
             <?php endif;?>
         </div>
-        <input class="button-primary" type="submit" value="Buy">
+        <form method="get" action="">
+            <input type="number" name="amount" value="1">
+            <input type="hidden" name="product_id" value="<? echo $site_page->id; ?>"> шт.
+            <input class="button-primary" type="submit" name="buy" value="Buy">
+        </form>
     </div>
 </div>
 
