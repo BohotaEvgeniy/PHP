@@ -1,14 +1,7 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Евгений
- * Date: 05.08.2017
- * Time: 6:44
- */
-
-header('content-type:text/html;charset=utf-8');
-?>
+<?php  setcookie('DateAndTimeIsLost',date("Y-m-d H:i:s"),time()+3600*24*30,'/');?>
+<?php  setcookie('LastPlace',$_SERVER['QUERY_STRING'],time()+3600*24*30,'/');?>
 <?php require_once 'html/functions.php' ?>
+<?php $cart = getCart($products); ?>
 
 
 <!DOCTYPE html>
@@ -53,6 +46,11 @@ header('content-type:text/html;charset=utf-8');
             </div>
         </div>
     </div>
+    <div class="cart">
+        <a href="?r=basketPage">Корзина покупок</a></br>
+        <span>Количество <span><?php echo " " . $cart->count . "<br>"; ?></span></span>
+        <span>Сумма <span><?php echo " " .  $cart->cost; ?></span></span>
+    </div>
 </header>
 <div class="container">
     <div class="row">
@@ -73,7 +71,10 @@ header('content-type:text/html;charset=utf-8');
 <footer>
     <div class="container">
         <div class="row">
-            <p>Footer</p>
+            <p>
+                <?php echo $_COOKIE['DateAndTimeIsLost'] . "<br>"; ?>
+                <a href="<? echo "index.php?" . $_COOKIE['LastPlace']; ?>">Path</a>
+            </p>
         </div>
     </div>
 </footer>
