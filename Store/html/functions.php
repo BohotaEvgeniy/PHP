@@ -85,11 +85,11 @@ if(isset($_GET['buy'])) {
             $cart = unserialize($_COOKIE['cart']);
             $cart[$product_id] = $amount;
             setcookie('cart', serialize($cart), time() + 3600, '/');
-            header("location: http://php-master/store/index.php?r=product&id=" . $product_id);
+            header("location: ?r=product&id=" . $product_id);
         } else {
             $cart[$product_id] = $amount;
             setcookie('cart', serialize($cart), time() + 3600, '/');
-            header("location: http://php-master/store/index.php?r=product&id=" . $product_id);
+            header("location: ?r=product&id=" . $product_id);
         }
     }
 }
