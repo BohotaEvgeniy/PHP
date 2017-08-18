@@ -1,0 +1,3 @@
+Bohota
+2017-08-18 06:44:48
+/Lesson6/task_1.php
