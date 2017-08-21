@@ -24,6 +24,23 @@
             </div>
         </div>
     <? endforeach; ?>
+    <div class="row">
+        <form action="" method="post">
+            <label for="">Name</label>
+            <input type="text" name="user" required></br>
+            <label for="">Soname</label>
+            <input type="text" name="surname" required></br>
+            <label for="">Mail</label>
+            <input type="email" name="email" required></br>
+            <label for="">Phone</label>
+            <input type="tel" name="phone" required></br>
+            <label for="">Adress</label>
+            <input type="text" name="adress" required></br>
+            <label for="">Remark</label>
+            <input type="text" name="text"></br>
+            <input class="btn button-primary" type="submit" value="submit" name="submitList">
+        </form>
+    </div>
 <? else :?>
     <h2>Корзина пуста</h2>
 <? endif; ?>

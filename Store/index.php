@@ -1,7 +1,7 @@
 <?php  setcookie('DateAndTimeIsLost',date("Y-m-d H:i:s"),time()+3600*24*30,'/');?>
 <?php  setcookie('LastPlace',$_SERVER['QUERY_STRING'],time()+3600*24*30,'/');?>
 <?php require_once 'html/functions.php' ?>
-<?php $cart = getCart($products); ?>
+<?php $cart = getCart($products);?>
 
 
 <!DOCTYPE html>

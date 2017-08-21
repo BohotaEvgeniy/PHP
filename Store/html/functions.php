@@ -58,7 +58,6 @@ function viewMenu($pages) {
                 } else {
                     echo "<li><a class='button button-primary' href='?r=pages&id=".$page->id."'>$page->name</a></li>";
                 }
-
             }
         }
         echo '</ul>';
@@ -114,6 +113,36 @@ function getCart($products){
     $obj->count = $count;
     return $obj;
 }
-
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+if(isset($_POST['submitList'])) {
+    if (isset($_COOKIE['cart'])) {
+        if (isset($_POST['user']) && isset($_POST['surname']) && isset($_POST['email']) && isset($_POST['phone']) && isset($_POST['adress'])) {
+            $file = 'files/list.txt';
+            $line = '=============' . rand(1, 1000) . '===============';
+            $r = fopen($file, 'a+');
+            fwrite($r, $line . PHP_EOL);
+            fwrite($r, 'Name' . ': ' . $_POST['user'] . PHP_EOL);
+            fwrite($r, 'Surname' . ': ' .  $_POST['surname'] . PHP_EOL);
+            fwrite($r, 'Email' . ': ' .  $_POST['email'] . PHP_EOL);
+            fwrite($r, 'Phone' . ': ' .  $_POST['phone'] . PHP_EOL);
+            fwrite($r, 'Adress' . ': ' .  $_POST['adress'] . PHP_EOL);
+            fwrite($r, 'Text' . ': ' .  $_POST['text'] . PHP_EOL);
+            fwrite($r, 'List products:' . PHP_EOL);
+            $count = 1;
+            $produceProducts = getCart($products);
+                foreach ($produceProducts->items as $key => $value) {
+                    $name = $produceProducts->items[$key]->name;
+                    $amount = $produceProducts->items[$key]->amount;
+                    $price = $produceProducts->items[$key]->cost;
+                    fwrite($r,'   '.$count.'. ' . $name . ' шт. ' . $amount . ' Цена ' . $price . PHP_EOL);
+                    $count++;
+                }
+            fclose($r);
+            setcookie('cart', '', time() - 3600, '/');
+            header("location: http://php/Store/index.php?r=basketPage");
+        }
+    }
+}
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 

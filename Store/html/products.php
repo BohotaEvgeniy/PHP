@@ -2,7 +2,6 @@
     <?php if($products) :?>
         <?php $i=0; foreach ($products as $product) :?>
             <?php $i++ ?>
-
                 <div class="one-third column">
                     <div class="image">
                         <img src="files/images/cell.png">
