@@ -1,4 +1,4 @@
-<?php include 'functions.php'?>
+<?php include_once 'functions.php'?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +14,11 @@
 <body>
 <div class="container">
     <div class="row">
-        <form class="col s6" method="post">
+        <form class="col s6" method="post" action="">
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">vpn_key</i>
-                    <input id="icon-password" type="url" name="pathUrl" required class="validate">
+                    <input id="icon-password" type="text" name="pathUrl" required class="validate">
                     <label for="icon_password">Url</label>
                 </div>
                 <div class="input-field col s12">
@@ -37,3 +37,4 @@
 
 </body>
 </html>
+
