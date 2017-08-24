@@ -1,5 +1,5 @@
 <?php
-header('Content-tepe: text/html,charset=utd-8');
+header('Content-type: text/html;charset=utf-8');
 /*============== task 1 ===========================*/
 if ($_POST['action']) {
     $patternLogin = '/^[a-zA-Z0-9]{4,}+$/i';
@@ -31,8 +31,15 @@ function translit($str) {
 }
 
 if ($_POST['actionHttp']) {
-    $containTmp = "";
-    $containTmp .= $_POST['pathUrl'];
-    $translit = translit($containTmp);
-    echo var_dump($translit);
+    $patternPath = '/^(\/)[a-zA-Z0-9а-яёА-ЯЁ\-]+?(\/){0,1}$/ui';
+    if (isset($_POST['pathUrl'])) {
+        $res = mb_strtolower($_POST['pathUrl']);
+        if (!preg_match($patternPath, $res, $match)) {
+            echo "ERROR";
+        }
+        $string = translit(preg_replace('/[\/\-]+?/', '', $match));
+        foreach ($string as $value) {
+            echo $value;
+        }
+    }
 }
