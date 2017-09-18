@@ -1,4 +1,55 @@
-<?php require_once 'functions.php'?>
+<?php require_once 'db.php'?>
+
+<?php
+$data = $_POST;
+if ( isset($data['action']) ) {  // Если кнопка нажата
+
+    $errors = array();
+    if ( !preg_match('/^[a-zA_Z0-9-]{4,}/i',$data['userLogin']) && (trim($data['userLogin']) != '')){   // Если  не  соответствует Pregmatch(regular) логину и поле логин не пустое
+        $errors[] = "Enter login.Login isn't correct.Enter please numbers or letters not less 4 symbols";
+    }
+
+    if ( !preg_match('/^[a-zA_Z0-9]{4,}/i',$data['userLogin']) && ($data['userPassword'] != '') ){  // Если  не  соответствует Pregmatch(regular) пароль и поле пароль не пустое
+        $errors[] = "Enter Password";
+    }
+
+    if ( trim($data['userPassword2']) != $data['userPassword'] ){ // еще одна проверка на пароль
+        $errors[] = "Enter Password repeat";
+    }
+
+    if ( empty($errors) ) {   // Если массив ошибок пуст,тогда
+        addUser($data['userLogin'], $data['userPassword']);
+    } else {
+        echo '<div>' . array_shift($errors) . '</div>'; // вывод ошибки
+    }
+}
+?>
+
+<?php
+function addUser ($userLogin, $userPassword)
+{
+    $containStrLogin = strtolower($userLogin); // Храним Логин
+    $containStrPass = password_hash($userPassword,PASSWORD_DEFAULT); // Храним Пароль
+    $pathDb = includeDB(); // Подключение к БД
+    if ($pathDb) { // Проверка на подключение к БД
+        $a = mysqli_query($pathDb, "SELECT * FROM `users` WHERE `login` LIKE '%$containStrLogin%'"); //Подготовили шаблон
+        if ($a->num_rows) { //Проверка на логин в БД
+            echo "Login exist!" . "</br>";
+            echo "Enter login again!" . "</br>";
+        }
+        else { // Заносим в БД
+            $query = "INSERT INTO `users` (`login`,`password`) VALUES ('$containStrLogin','$containStrPass')";
+            mysqli_query($pathDb, $query);
+            echo "<h1>" . "You has registered!!!" . "</h1>";
+        }
+        //Если вставка прошла успешно
+        mysqli_close($pathDb); // Закрываем соединение
+    } else {
+        echo "Not contact with DB";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
