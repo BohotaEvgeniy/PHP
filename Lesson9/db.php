@@ -1,13 +1,11 @@
 <?php header('Content-type:text/html;charset=utf-8;')?>
 <?php
 
-function includeDB ($dbHost, $dbLogin, $dbPass, $dbName){
-    if (!empty($dbHost) && !empty($dbLogin) && (!empty($dbPass) || empty('')) && !empty($dbName)) {
-
-        define("DB_HOST", $dbHost);
-        define("DB_LOGIN", $dbLogin);
-        define("DB_PASS", $dbPass);
-        define("DB_NAME", $dbName);
+function includeDB (){
+    define("DB_HOST", 'localhost');
+    define("DB_LOGIN", 'root');
+    define("DB_PASS", '');
+    define("DB_NAME", 'register');
 
         $link = mysqli_connect(DB_HOST, DB_LOGIN, DB_PASS, DB_NAME); // подключаемся к БД
         if (!$link) {
@@ -16,9 +14,23 @@ function includeDB ($dbHost, $dbLogin, $dbPass, $dbName){
         }
         echo 'Соединение установлено... ' . mysqli_get_host_info($link) . "</br>";
         return $link;
-    }
 }
 
+/******************************************************************************/
+
+function requireDB ($link) {
+    if (!empty($link)) {
+        $query =  // Любой запрос на усмотрение
+        /*Выполняем запрос в БД*/
+        $res = mysqli_query($link, $query);
+
+        //Отображение результата в виде массива
+        while ($row = mysqli_fetch_assoc($res)) {
+            $results[] = $row;
+        }
+        print_r($results);
+    }
+}
 
 /******************************************************************************/
 
@@ -35,7 +47,6 @@ function requireDBLot ($link) {
         print_r($results);
     }
 }
-//requireDBLot(includeDB($_SERVER['SERVER_NAME'],'root','','people'));
 
 /******************************************************************************/
 
@@ -50,13 +61,7 @@ function requireDBOne ($link) {
         mysqli_close($link);
    }
 }
-//requireDbOne(includeDB($_SERVER['SERVER_NAME'],'root','','people'));
 
 /******************************************************************************/
 
-function addUser ($pathDb, $containStrLogin, $containStrPass) {
-    if (!empty($pathDb)){
-        $query = "INSERT INTO `users` (`login`,`password`) VALUES ('$containStrLogin','$containStrPass')";
-        mysqli_query($pathDb, $query);
-    }
-}
+
