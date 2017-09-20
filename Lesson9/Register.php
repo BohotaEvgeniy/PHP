@@ -32,18 +32,18 @@ function addUser ($userLogin, $userPassword)
     $containStrPass = password_hash($userPassword,PASSWORD_DEFAULT); // Храним Пароль
     $pathDb = includeDB(); // Подключение к БД
     if ($pathDb) { // Проверка на подключение к БД
-        $a = mysqli_query($pathDb, "SELECT * FROM `users` WHERE `login` LIKE '%$containStrLogin%'"); //Подготовили шаблон
-        if ($a->num_rows) { //Проверка на логин в БД
+        $containStr = "SELECT * FROM `users` WHERE `login` LIKE '%$containStrLogin%'";
+        $selectDb = requireDB($pathDb,$containStr); //Подготовили шаблон
+        if ($selectDb->num_rows) { //Проверка на логин в БД
             echo "Login exist!" . "</br>";
             echo "Enter login again!" . "</br>";
         }
         else { // Заносим в БД
-            $query = "INSERT INTO `users` (`login`,`password`) VALUES ('$containStrLogin','$containStrPass')";
-            mysqli_query($pathDb, $query);
+            includeIntoDB($pathDb,$containStrLogin,$containStrPass); //Подготовили шаблон
             echo "<h1>" . "You has registered!!!" . "</h1>";
         }
         //Если вставка прошла успешно
-        mysqli_close($pathDb); // Закрываем соединение
+        closeDB($pathDb);
     } else {
         echo "Not contact with DB";
     }
