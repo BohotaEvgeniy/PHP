@@ -18,33 +18,39 @@ function includeDB (){
 
 /******************************************************************************/
 
-function requireDB ($link) {
-    if (!empty($link)) {
-        $query =  // Любой запрос на усмотрение
-        /*Выполняем запрос в БД*/
-        $res = mysqli_query($link, $query);
+function requireDB ($pathDb,$containStr) { // Выбираем пользователя
+    /*Выполняем запрос в БД*/
+    $query = mysqli_query($pathDb, $containStr); // Любой запрос на усмотрение
 
-        //Отображение результата в виде массива
-        while ($row = mysqli_fetch_assoc($res)) {
-            $results[] = $row;
-        }
-        print_r($results);
-    }
+    return $query;
+
 }
 
 /******************************************************************************/
 
-function requireDBLot ($link) {
-    if (!empty($link)) {
-        $query = "SELECT * FROM Users"; // Любой запрос на усмотрение
-        /*Выполняем запрос в БД*/
-        $res = mysqli_query($link, $query);
+function includeIntoDB ($pathDb,$containStrLogin,$containStrPass) { // Добавляем в БД пользователя
+    /*Выполняем запрос в БД*/
+    mysqli_query($pathDb, "INSERT INTO `users` (`login`,`password`) VALUES ('$containStrLogin','$containStrPass')"); // Любой запрос на усмотрение
 
+}
+
+/******************************************************************************/
+
+function closeDB ($pathDb) { // Добавляем в БД пользователя
+    /*Закрываем БД*/
+    mysqli_close($pathDb); // Закрываем соединение
+
+}
+
+/******************************************************************************/
+
+function requireDBLot ($resultAllUsers) {
+    if (!empty($resultAllUsers)) {
         //Отображение результата в виде массива
-        while ($row = mysqli_fetch_assoc($res)) {
+        while ($row = mysqli_fetch_object($resultAllUsers)) { // заносим в массив БД
             $results[] = $row;
         }
-        print_r($results);
+        return $results;
     }
 }
 
