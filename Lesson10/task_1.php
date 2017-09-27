@@ -31,16 +31,21 @@ order_id	users_id	status
 ?>
 <?php
     $pathDb = includeDB(); // Подключаемся к БД
-    $query = 'SELECT o.orders_id,u.name FROM orders o INNER JOIN users u ON o.users_id=u.users_id and o.`status`=0'; // Запрос номер 1
-    $query2 = 'SELECT u.name FROM users u INNER JOIN orders o ON o.users_id=u.users_id and o.`status`=0'; // Запрос номер 2
-    $query3 = 'SELECT u.users_id,u.name,COUNT(*) AS amount_orders FROM users u INNER JOIN orders o ON o.users_id=u.users_id AND o.`status`=1 GROUP BY u.users_id,u.name HAVING COUNT(*) > 3'; // Запрос номер 3
-    $result = requireDB($pathDb,$query); // Запрос к БД
-    $result2 = requireDB($pathDb,$query2); // Запрос к БД
-    $result3 = requireDB($pathDb,$query3); // Запрос к БД
+
+    $query = 'SELECT o.orders_id,u.name FROM orders o INNER JOIN users u ON o.users_id=u.users_id and o.`status`=0'; // Запрос номер 1 / task 1 /
+    $query2 = 'SELECT u.name FROM users u INNER JOIN orders o ON o.users_id=u.users_id and o.`status`=0'; // Запрос номер 2 / task 1 /
+    $query3 = 'SELECT u.users_id,u.name,COUNT(*) AS amount_orders FROM users u INNER JOIN orders o ON o.users_id=u.users_id AND o.`status`=1 GROUP BY u.users_id,u.name HAVING COUNT(*) > 3'; // Запрос номер 3 / task 1 /
+
+    $result = requireDB($pathDb,$query); // Запрос к БД / task 1 /
+    $result2 = requireDB($pathDb,$query2); // Запрос к БД / task 1 /
+    $result3 = requireDB($pathDb,$query3); // Запрос к БД / task 1 /
+
     $arr = requireDBLot($result); // Заносим в массив
     $arr2 = requireDBLot($result2); // Заносим в массив
     $arr3 = requireDBLot($result3); // Заносим в массив
-    closeDB($pathDb);
+
+    closeDB($pathDb);  // закрываем БД
+
 ?>
 
 <!DOCTYPE html>
@@ -99,7 +104,7 @@ order_id	users_id	status
                     </tr>
                     </thead>
                     <tbody>
-                    <? for ($i = 0; $i < count($arr); $i++): ?>
+                    <? for ($i = 0; $i < count($arr3); $i++): ?>
                         <tr>
                             <td><? echo $arr3[$i]->users_id; ?></td>
                             <td><? echo $arr3[$i]->name; ?></td>
@@ -111,7 +116,7 @@ order_id	users_id	status
             </div>
         </div>
 
-    <!--Import jQuery before materialize.js-->
+        <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
